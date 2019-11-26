@@ -71,18 +71,13 @@ interface RankingAPI {
         }
 
         private fun buildRetrofit(): Retrofit {
-            val logging = HttpLoggingInterceptor()
-            logging.level = HttpLoggingInterceptor.Level.BODY
-            val client = OkHttpClient.Builder()
-                .addInterceptor(logging)
-                .build()
+
 
 
             return Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(CoroutineCallAdapterFactory())
-                .client(client)
                 .build()
         }
     }
