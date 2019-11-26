@@ -19,6 +19,7 @@ import com.supinternet.aqi.R
 import com.supinternet.aqi.data.network.AQIAPI
 import com.supinternet.aqi.data.network.model.map.MapSearch
 import com.supinternet.aqi.data.network.model.search.TextSearch
+import com.supinternet.aqi.data.network.model.station.Data
 import kotlinx.coroutines.*
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -42,7 +43,7 @@ class FavsTab : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val table = mutableListOf<String>()
+        val table = mutableListOf<Data>()
         super.onViewCreated(view, savedInstanceState)
 
         // Fausse données
@@ -54,22 +55,23 @@ class FavsTab : Fragment() {
             for(station in data) {
 
                 val res =
-                    com.supinternet.aqi.data.network.AQIAPI.getInstance().textSearchAsync(
-                        ,
+                    com.supinternet.aqi.data.network.AQIAPI.getInstance().currentStationData(
+                        station.stationId,
                         "7ed2ade1e4f2bcf13b203614959658c2d944f131"
                     ).await()
 
-                table.add("res")
+                table.add(res.data)
+                Log.v("HELLO",res.data.toString())
             }
 
 
             withContext(Dispatchers.Main) {
-                //textview.text := res.data
-            Log.v("HELLO",res.data.toString())
+                //textview.text := res.data )
 
             }
 
         }
+        Log.v("abcd",table.toString())
 
 
 
