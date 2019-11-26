@@ -1,6 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!-- A remplir -->
+    <item
+        android:id="@+id/main_menu_around_me"
+        android:title="@string/main_menu_around_me"
+        android:icon="@drawable/ic_menu_main_around_me"/>
+    <item
+        android:id="@+id/main_menu_favs"
+        android:title="@string/main_menu_favs"
+        android:icon="@drawable/ic_menu_main_favs"/>
+    <item
+        android:id="@+id/main_menu_travel"
+        android:title="@string/main_menu_travel"
+        android:icon="@drawable/ic_menu_main_travel"/>
+    <item
+        android:id="@+id/main_menu_settings"
+        android:title="@string/main_menu_settings"
+        android:icon="@drawable/ic_menu_main_settings"/>
 
 </menu>

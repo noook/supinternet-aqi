@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import com.supinternet.aqi.R
 import com.supinternet.aqi.ui.screens.main.tabs.aroundme.MapsTab
 import com.supinternet.aqi.ui.screens.main.tabs.favs.FavsTab
@@ -23,7 +24,33 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // TODO Afficher le bon fragment lorsqu'on clique sur la bottom bar
+        replaceFragment(MapsTab())
+
+        main_bottom_bar.setOnNavigationItemSelectedListener { item ->
+            replaceFragment(
+                when (item.itemId) {
+                    R.id.main_menu_around_me -> MapsTab()
+                    R.id.main_menu_favs -> FavsTab()
+                    R.id.main_menu_travel -> TravelTab()
+                    R.id.main_menu_settings -> SettingsTab()
+                    else -> throw Exception("Unknown menu item")
+                }
+            )
+
+            true
+        }
+    }
+
+    private fun replaceFragment(fragment: Fragment) {
+        val tag = fragment.javaClass.simpleName
+
+        supportFragmentManager.beginTransaction()
+            .replace(
+                R.id.main_content,
+                supportFragmentManager.findFragmentByTag(tag) ?: fragment,
+                tag
+            )
+            .commitAllowingStateLoss()
     }
 
 }

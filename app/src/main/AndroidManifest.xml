@@ -13,7 +13,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".ui.screens.splashscreen.SplashScreenActivity"
+            android:name="com.supinternet.aqi.ui.screens.splashscreen.SplashScreenActivity"
             android:theme="@style/SplashScreenTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,11 +22,11 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.screens.intro.IntroActivity"
+        <activity android:name="com.supinternet.aqi.ui.screens.intro.IntroActivity"
             android:theme="@style/IntroTheme"
             android:exported="false" />
 
-        <activity android:name=".ui.screens.main.MainActivity"
+        <activity android:name="com.supinternet.aqi.ui.screens.main.MainActivity"
             android:exported="false" />
 
         <meta-data
