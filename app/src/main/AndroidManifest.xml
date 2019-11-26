@@ -29,7 +29,7 @@
         <activity android:name="com.supinternet.aqi.ui.screens.main.MainActivity"
             android:exported="false" />
 
-        <activity android:name=".ui.screens.DetailStationActivity"
+        <activity android:name=".ui.screens.main.DetailActivity"
             android:exported="false" />
 
         <meta-data
