@@ -113,5 +113,6 @@
     <string name="maps_tab_search_no_station_title">No station</string>
     <string name="maps_tab_search_no_station_message">Please try with another search.</string>
     <string name="air_quality">Air quality %1$s</string>
+    <string name="no_result">No result</string>
 
 </resources>
