@@ -1,6 +1,8 @@
 package com.supinternet.aqi.data.network
 
+import com.google.gson.GsonBuilder
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
+import com.supinternet.aqi.data.network.model.history.History
 import com.supinternet.aqi.data.network.model.map.MapSearch
 import com.supinternet.aqi.data.network.model.ranking.Ranking
 import com.supinternet.aqi.data.network.model.search.TextSearch
@@ -12,6 +14,9 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
+import okhttp3.logging.HttpLoggingInterceptor
+
+
 
 interface AQIAPI {
 
@@ -71,14 +76,47 @@ interface RankingAPI {
         }
 
         private fun buildRetrofit(): Retrofit {
-
-
-
-            return Retrofit.Builder()
+             return Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(CoroutineCallAdapterFactory())
                 .build()
+
+}
+
+interface HistoryApi {
+
+    @GET("api/getStationHistory?id=5722")
+    fun getHistory() :  Deferred<List<History>>
+
+    companion object Factory {
+        @Volatile
+        private var retrofit: Retrofit? = null
+
+        private const val BASE_URL: String = "https://us-central1-polumapproject.cloudfunctions.net/"
+
+        @Synchronized
+        fun getInstance(): HistoryApi {
+            retrofit = retrofit ?: buildRetrofit()
+            return retrofit!!.create(HistoryApi::class.java)
+        }
+
+        private fun buildRetrofit(): Retrofit {
+            val logging = HttpLoggingInterceptor()
+            logging.level = (HttpLoggingInterceptor.Level.BODY)
+            val gson = GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create()
+
+            val client = OkHttpClient.Builder()
+                .addInterceptor(logging)
+                .build()
+
+            return Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .client(client)
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .addCallAdapterFactory(CoroutineCallAdapterFactory())
+                .build()
+        }
         }
     }
-}
+}}

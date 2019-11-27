@@ -2,6 +2,7 @@ package com.supinternet.aqi.ui.screens.main.tabs.aroundme
 
 import android.app.AlertDialog
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.text.format.DateUtils
 import android.view.KeyEvent
@@ -17,10 +18,12 @@ import com.supinternet.aqi.R
 import com.supinternet.aqi.data.network.AQIAPI
 import com.supinternet.aqi.data.network.model.map.MapSearchData
 import com.supinternet.aqi.data.network.model.search.TextSearchData
+import com.supinternet.aqi.ui.screens.main.DetailActivity
 import com.supinternet.aqi.ui.utils.GoogleMapUtils
 import kotlinx.android.synthetic.main.fragment_maps.*
 import kotlinx.android.synthetic.main.fragment_maps_search_card.*
 import kotlinx.android.synthetic.main.fragment_maps_station_card.*
+import kotlinx.android.synthetic.main.fragment_maps_station_card.view.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -149,6 +152,7 @@ class MapsTab : Fragment(), OnMapReadyCallback {
 
             if (data is MapSearchData) {
                 showDetailsCard(
+                    stationId = data.uid,
                     title = data.station.name,
                     aqi = try {
                         data.aqi.toInt()
@@ -158,18 +162,19 @@ class MapsTab : Fragment(), OnMapReadyCallback {
                     date = SimpleDateFormat(
                         "yyyy-MM-dd'T'HH:mm:ssX",
                         Locale.ENGLISH
-                    ).parse(data.station.time).time
+                    ).parse(data.station.time)!!.time
                 )
 
                 location = LatLng(data.lat, data.lon)
             } else if (data is TextSearchData) {
                 showDetailsCard(
+                    stationId = data.uid,
                     title = data.station.name,
                     aqi = data.aqi.toInt(),
                     date = SimpleDateFormat(
                         "yyyy-MM-dd HH:mm:ss",
                         Locale.ENGLISH
-                    ).parse(data.time.stime).time
+                    ).parse(data.time.stime)!!.time
                 )
 
                 location = LatLng(data.station.geo[0], data.station.geo[1])
@@ -212,11 +217,19 @@ class MapsTab : Fragment(), OnMapReadyCallback {
         maps_tab_loading_overlay.visibility = View.GONE
     }
 
-    private fun showDetailsCard(title: String, date: Long, aqi: Int?) {
+    private fun showDetailsCard(stationId : Int, title: String, date: Long, aqi: Int?) {
         maps_tab_station.visibility = View.VISIBLE
+        val intent = Intent(context, DetailActivity::class.java)
 
+
+
+        maps_tab_station.setOnClickListener{ startActivity(intent)}
         maps_tab_station_name.text = title
         maps_tab_station_aqi_value.text = aqi?.toString() ?: "?"
+
+        intent.putExtra("name", title)
+        intent.putExtra("id", stationId.toString())
+        intent.putExtra("air_quality", aqi.toString())
 
         maps_tab_station_aqi_value.setTextColor(
             ContextCompat.getColor(

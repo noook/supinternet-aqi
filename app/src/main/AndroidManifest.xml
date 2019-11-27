@@ -29,6 +29,9 @@
         <activity android:name="com.supinternet.aqi.ui.screens.main.MainActivity"
             android:exported="false" />
 
+        <activity android:name=".ui.screens.main.DetailActivity"
+            android:exported="false" />
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
