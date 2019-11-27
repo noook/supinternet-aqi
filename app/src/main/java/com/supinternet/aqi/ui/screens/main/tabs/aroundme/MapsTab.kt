@@ -221,12 +221,15 @@ class MapsTab : Fragment(), OnMapReadyCallback {
         maps_tab_station.visibility = View.VISIBLE
         val intent = Intent(context, DetailActivity::class.java)
 
-        intent.putExtra("name", title)
-        intent.putExtra("id", stationId)
+
 
         maps_tab_station.setOnClickListener{ startActivity(intent)}
         maps_tab_station_name.text = title
         maps_tab_station_aqi_value.text = aqi?.toString() ?: "?"
+
+        intent.putExtra("name", title)
+        intent.putExtra("id", stationId)
+        intent.putExtra("air_quality", aqi.toString())
 
         maps_tab_station_aqi_value.setTextColor(
             ContextCompat.getColor(

@@ -22,8 +22,12 @@ class  DetailActivity: AppCompatActivity(){
 
         val name = intent.getStringExtra("name")
         val id = intent.getStringExtra("id")
+        val airQuality = intent.getStringExtra("air_quality")
+        val quality = findViewById<TextView>(R.id.air_quality)
+        quality.text = getString(R.string.air_quality, airQuality)
 
-       val infos = findViewById<TextView>(R.id.infos)
+
+        val infos = findViewById<TextView>(R.id.infos)
         infos.text = "$name $id"
 
         GlobalScope.launch {
