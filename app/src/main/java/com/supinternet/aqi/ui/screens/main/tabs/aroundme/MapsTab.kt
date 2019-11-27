@@ -228,7 +228,7 @@ class MapsTab : Fragment(), OnMapReadyCallback {
         maps_tab_station_aqi_value.text = aqi?.toString() ?: "?"
 
         intent.putExtra("name", title)
-        intent.putExtra("id", stationId)
+        intent.putExtra("id", stationId.toString())
         intent.putExtra("air_quality", aqi.toString())
 
         maps_tab_station_aqi_value.setTextColor(
