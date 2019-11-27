@@ -2,7 +2,6 @@ package com.supinternet.aqi.ui.screens.main.tabs.travel
 
 import android.content.Context
 import android.graphics.Typeface
-import android.provider.Settings.Global.getString
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.StyleSpan
@@ -15,9 +14,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.supinternet.aqi.R
 import com.supinternet.aqi.data.network.model.ranking.City
 import kotlinx.android.synthetic.main.travel_tab_item_cell.view.*
-import java.lang.Exception
 
-class CityAdapter(val cities: List<City>, val context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class CityAdapter(var cities: List<City>, val context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return CityItemCell(
             LayoutInflater.from(parent.context)
@@ -32,6 +30,10 @@ class CityAdapter(val cities: List<City>, val context: Context) : RecyclerView.A
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
 
         (holder as CityItemCell).bindCity(cities[position], position, context)
+    }
+
+    fun updateValues(cities: List<City>) {
+        this.cities = cities
     }
 }
 
