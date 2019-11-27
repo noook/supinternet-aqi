@@ -4,10 +4,10 @@ import android.os.Bundle
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.supinternet.aqi.R
-import com.supinternet.aqi.data.network.HistoryApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import android.util.Log
+import com.supinternet.aqi.data.network.RankingAPI
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -36,8 +36,8 @@ class  DetailActivity: AppCompatActivity(){
                 // il faut les utiliser pour le graph  pour plus de détails regarder
                 // History.kt dans les models ou demandez moi (c'est Nico)
 
-                //val res = HistoryApi.getInstance().getHistory().await()
-
+                val res = RankingAPI.Factory.HistoryApi.getInstance().getHistory().await()
+                Log.v("yoo",res.toString())
 
             } catch (e: Exception) {
                 e.printStackTrace()
