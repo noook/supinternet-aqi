@@ -111,5 +111,6 @@
     <string name="maps_tab_zone_no_station_message">Aucune station n\'existe. Veuillez essayer d\'élargir la zone de recherche.</string>
     <string name="maps_tab_search_no_station_title">Aucune station</string>
     <string name="maps_tab_search_no_station_message">Aucune station n\'existe avec cette recherche.</string>
+    <string name="no_result">Aucun résultat</string>
 
 </resources>
