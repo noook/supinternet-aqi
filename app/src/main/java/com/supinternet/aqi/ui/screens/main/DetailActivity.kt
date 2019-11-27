@@ -36,7 +36,7 @@ class  DetailActivity: AppCompatActivity(){
                 // il faut les utiliser pour le graph  pour plus de détails regarder
                 // History.kt dans les models ou demandez moi (c'est Nico)
 
-                val res = HistoryApi.getInstance().getHistory().await()
+                //val res = HistoryApi.getInstance().getHistory().await()
 
 
             } catch (e: Exception) {

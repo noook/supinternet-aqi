@@ -162,7 +162,7 @@ class MapsTab : Fragment(), OnMapReadyCallback {
                     date = SimpleDateFormat(
                         "yyyy-MM-dd'T'HH:mm:ssX",
                         Locale.ENGLISH
-                    ).parse(data.station.time).time
+                    ).parse(data.station.time)!!.time
                 )
 
                 location = LatLng(data.lat, data.lon)
@@ -174,7 +174,7 @@ class MapsTab : Fragment(), OnMapReadyCallback {
                     date = SimpleDateFormat(
                         "yyyy-MM-dd HH:mm:ss",
                         Locale.ENGLISH
-                    ).parse(data.time.stime).time
+                    ).parse(data.time.stime)!!.time
                 )
 
                 location = LatLng(data.station.geo[0], data.station.geo[1])
