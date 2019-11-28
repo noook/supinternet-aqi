@@ -8,9 +8,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import android.util.Log
 import com.supinternet.aqi.data.network.RankingAPI
+import android.view.View
+import kotlinx.android.synthetic.main.station_details_bubble.view.*
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
+data class Bubble(val value: Double, val unit: String, val indice: String)
 
 class  DetailActivity: AppCompatActivity(){
 
@@ -47,5 +50,52 @@ class  DetailActivity: AppCompatActivity(){
             }
         }
 
+        val bubblesData = listOf<Bubble>(
+            Bubble(
+                18.19,
+                "ug/m3",
+                "PM2.5"
+            ),
+            Bubble(
+                170.75,
+                "ppb",
+                "CO"
+            ),
+            Bubble(
+                17.36,
+                "ppb",
+                "NO2"
+            ),
+            Bubble(
+                0.25,
+                "ppb",
+                "SO2"
+            ),
+            Bubble(
+                16.48,
+                "ppb",
+                "O3"
+            ),
+            Bubble(
+                28.08,
+                "ug/m3",
+                "PM10"
+            )
+        )
+
+        var bubblesViews = listOf<View>(
+            findViewById(R.id.b1),
+            findViewById(R.id.b2),
+            findViewById(R.id.b3),
+            findViewById(R.id.b4),
+            findViewById(R.id.b5),
+            findViewById(R.id.b6)
+        )
+
+        for ((index, bubble) in bubblesData.withIndex()) {
+            bubblesViews[index].findViewById<TextView>(R.id.bubble_indice).text = bubble.indice
+            bubblesViews[index].findViewById<TextView>(R.id.bubble_value).text = bubble.value.toString()
+            bubblesViews[index].findViewById<TextView>(R.id.bubble_unit).text = bubble.unit
+        }
     }
 }
