@@ -1,6 +1,10 @@
 package com.supinternet.aqi.ui.screens.main
 
+import android.content.res.Resources
+import android.os.Build
 import android.os.Bundle
+import android.util.Log
+import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.anychart.AnyChart
@@ -18,10 +22,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.w3c.dom.Text
 
 
 class DetailActivity : AppCompatActivity() {
     var history: List<History> = listOf()
+    var chartView: AnyChartView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,10 +40,34 @@ class DetailActivity : AppCompatActivity() {
         val quality = findViewById<TextView>(R.id.air_quality)
         quality.text = getString(R.string.air_quality, airQuality)
 
-
+        this.chartView = detail_activity_column_chart
         val infos = findViewById<TextView>(R.id.infos)
         infos.text = "$name $id"
         val self = this
+        detail_Activity_button_aqi.tag = "aqi"
+        detail_Activity_button_pm2_5.tag = "pm2_5"
+        detail_Activity_button_pm10.tag = "pm10"
+        detail_Activity_button_no2.tag = "no2"
+
+        val buttons: List<TextView> = listOf(
+            detail_Activity_button_aqi,
+            detail_Activity_button_pm2_5,
+            detail_Activity_button_pm10,
+            detail_Activity_button_no2
+        )
+
+        buttons.forEach {
+            val button = it
+            it.setOnClickListener {
+                buttons.forEach {
+                    it.setTextColor(resources.getColor(R.color.button_background))
+                    it.background = getDrawable(R.drawable.border)
+                }
+                button.setTextColor(resources.getColor(R.color.white))
+                button.background = getDrawable(R.color.button_background)
+                initChartWithTag(button.tag as String)
+            }
+        }
 
         GlobalScope.launch {
             try {
@@ -54,23 +84,56 @@ class DetailActivity : AppCompatActivity() {
             }
 
             withContext(Dispatchers.Main) {
-                initChart()
+                initChart(Dataset.USAQI)
+                detail_activity_buttons_container.visibility = View.VISIBLE
             }
         }
-
-
     }
 
-    fun initChart() {
-        val chartView: AnyChartView = detail_activity_column_chart
+    enum class Dataset {
+        PM10, PM2_5, NO2, USAQI
+    }
+
+    fun initChartWithTag(tag: String) {
+        val dataset: Dataset = when (tag) {
+            "aqi" -> Dataset.USAQI
+            "pm2_5" -> Dataset.PM2_5
+            "pm10" -> Dataset.PM10
+            "no2" -> Dataset.NO2
+            else -> Dataset.USAQI
+        }
+        this.initChart(dataset, true)
+    }
+
+    fun getChartDataset(set: List<History>, field: Dataset): List<Number> {
+        return when (field) {
+            Dataset.NO2 -> set.map {
+                it.data.no2.v
+            }
+            Dataset.PM10 -> set.map {
+                it.data.pm10.v
+            }
+            Dataset.PM2_5 -> set.map {
+                it.data.pm25.v
+            }
+            Dataset.USAQI -> set.map {
+                it.data.pm25.v // p field crashes sometimes, don't forget to change the field
+            }
+        }
+    }
+
+    fun initChart(withField: Dataset, recreate: Boolean = false) {
+        if (recreate == true) {
+            this.chartView!!.clear()
+        }
         val chart: Cartesian = AnyChart.column()
         // chart.xScale(DateTime.instantiate());
         var iterator = 0
-        val data: List<DataEntry> = this.history.takeLast(20).map {
+        val data: List<DataEntry> = this.getChartDataset(this.history.takeLast(20), withField).map {
             iterator++
-            //ValueDataEntry(it.time.toString(), it.data.pm10.v)
-            ValueDataEntry(iterator, it.data.pm10.v)
+            ValueDataEntry(iterator, it)
         }
+
         val column: Column = chart.column(data)
 
         val function = "function () {\n" +
@@ -90,7 +153,7 @@ class DetailActivity : AppCompatActivity() {
         column.stroke("rgba(0, 0, 0, 0")
 
         chart.animation(true)
-        chartView.setChart(chart)
+        this.chartView!!.setChart(chart)
     }
 
     fun getColumnColor(value: Int): String {
