@@ -1,9 +1,6 @@
 package com.supinternet.aqi.ui.screens.main
 
-import android.content.res.Resources
-import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -13,7 +10,6 @@ import com.anychart.chart.common.dataentry.DataEntry
 import com.anychart.chart.common.dataentry.ValueDataEntry
 import com.anychart.charts.Cartesian
 import com.anychart.core.cartesian.series.Column
-import com.anychart.scales.DateTime
 import com.supinternet.aqi.R
 import com.supinternet.aqi.data.network.RankingAPI
 import com.supinternet.aqi.data.network.model.history.History
@@ -22,7 +18,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.w3c.dom.Text
 
 
 class DetailActivity : AppCompatActivity() {
