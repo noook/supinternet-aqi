@@ -91,8 +91,6 @@
                 app:layout_constraintTop_toBottomOf="@id/b3" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
 </android.widget.ScrollView>
 
 
