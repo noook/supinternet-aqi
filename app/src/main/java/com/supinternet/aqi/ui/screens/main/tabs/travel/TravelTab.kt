@@ -1,7 +1,6 @@
 package com.supinternet.aqi.ui.screens.main.tabs.travel
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -49,14 +48,16 @@ class TravelTab : Fragment() {
 
         maps_tab_search_field.doOnTextChanged { text, start, count, after ->
             val query = text.toString()
-            val filter: (List<City>) -> List<City> = { l: List<City> -> l.filter {it.city.toLowerCase().contains(query.toLowerCase())} }
-            Log.d("QUERY", query)
+            val filter: (List<City>) -> List<City> = { l: List<City> ->
+                l.filter {
+                    it.city.toLowerCase().contains(query.toLowerCase())
+                }
+            }
             this.updateCities(filter)
         }
     }
 
     fun updateCities(filter: (List<City>) -> List<City>) {
-
         val sorted = this.cities.sortedByDescending {
             it.station.a.toInt()
         }

@@ -113,4 +113,8 @@
     <string name="maps_tab_search_no_station_message">Aucune station n\'existe avec cette recherche.</string>
     <string name="air_quality">Qualité de l\'air %1$s</string>
     <string name="no_result">Aucun résultat</string>
+    <string name="button_usaqi">USAQI</string>
+    <string name="button_pm2_5">PM2.5</string>
+    <string name="button_pm10">PM10</string>
+    <string name="button_no2">NO2</string>
 </resources>
