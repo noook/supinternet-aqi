@@ -129,9 +129,65 @@
                 android:textColor="@color/button_background"
                 android:textStyle="bold" />
         </LinearLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/bubble_layout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/detail_activity_buttons_container"
+            android:layout_marginTop="16dp">
+
+            <include
+                android:id="@+id/b1"
+                layout="@layout/station_details_bubble"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <include
+                android:id="@+id/b2"
+                layout="@layout/station_details_bubble"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toRightOf="@+id/b1"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <include
+                android:id="@+id/b3"
+                layout="@layout/station_details_bubble"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toRightOf="@+id/b2"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <include
+                android:id="@+id/b4"
+                layout="@layout/station_details_bubble"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toRightOf="@+id/b1"
+                app:layout_constraintTop_toBottomOf="@+id/b1" />
+
+            <include
+                android:id="@+id/b5"
+                layout="@layout/station_details_bubble"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toRightOf="@id/b4"
+                app:layout_constraintTop_toBottomOf="@id/b2" />
+
+            <include
+                android:id="@+id/b6"
+                layout="@layout/station_details_bubble"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toRightOf="@id/b5"
+                app:layout_constraintTop_toBottomOf="@id/b3" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
 </android.widget.ScrollView>
 
 

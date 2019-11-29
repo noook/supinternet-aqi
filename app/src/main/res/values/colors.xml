@@ -14,5 +14,7 @@
     <color name="aqi_unhealthy">#cc0033</color>
     <color name="aqi_very_unhealthy">#660099</color>
     <color name="aqi_hazardous">#7e0023</color>
+    <color name="bubble_lightBorder">#e9f0fc</color>
+    <color name="bubble_lightBackground">#fafafa</color>
     <color name="button_background">#527397</color>
 </resources>
