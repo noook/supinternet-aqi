@@ -17,4 +17,5 @@
     <color name="bubble_lightBorder">#e9f0fc</color>
     <color name="bubble_lightBackground">#fafafa</color>
     <color name="button_background">#527397</color>
+    <color name="yellow_star">#eeee00</color>
 </resources>

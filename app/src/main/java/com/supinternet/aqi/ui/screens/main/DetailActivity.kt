@@ -1,5 +1,6 @@
 package com.supinternet.aqi.ui.screens.main
 
+import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
@@ -24,6 +25,8 @@ data class Bubble(val value: Double, val unit: String, val indice: String)
 class DetailActivity : AppCompatActivity() {
     var history: List<History> = listOf()
     var chartView: AnyChartView? = null
+    var id: String? = null
+    var favorites: MutableSet<String> = mutableSetOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,6 +35,7 @@ class DetailActivity : AppCompatActivity() {
 
         val name = intent.getStringExtra("name")
         val id = intent.getStringExtra("id")
+        this.id = id
         val airQuality = intent.getStringExtra("air_quality")
         val quality = findViewById<TextView>(R.id.air_quality)
         quality.text = getString(R.string.air_quality, airQuality)
@@ -63,6 +67,16 @@ class DetailActivity : AppCompatActivity() {
                 button.background = getDrawable(R.color.button_background)
                 initChartWithTag(button.tag as String)
             }
+        }
+        this.loadFavorites()
+
+
+        detail_activity_star_empty.setOnClickListener {
+            this.addFavorite(id)
+        }
+
+        detail_activity_star_filled.setOnClickListener {
+            this.removeFavorite(id)
         }
 
         GlobalScope.launch {
@@ -129,13 +143,58 @@ class DetailActivity : AppCompatActivity() {
 
         for ((index, bubble) in bubblesData.withIndex()) {
             bubblesViews[index].findViewById<TextView>(R.id.bubble_indice).text = bubble.indice
-            bubblesViews[index].findViewById<TextView>(R.id.bubble_value).text = bubble.value.toString()
+            bubblesViews[index].findViewById<TextView>(R.id.bubble_value).text =
+                bubble.value.toString()
             bubblesViews[index].findViewById<TextView>(R.id.bubble_unit).text = bubble.unit
         }
     }
 
     enum class Dataset {
         PM10, PM2_5, NO2, USAQI
+    }
+
+    fun loadFavorites() {
+        val sharedPref = this.getPreferences(Context.MODE_PRIVATE) ?: return
+        val favorites = sharedPref.getStringSet(getString(R.string.saved_favorites), setOf())
+        this.favorites = favorites!!
+        this.displayStarButton()
+    }
+
+    fun saveFavorites() {
+        val sharedPref = this.getPreferences(Context.MODE_PRIVATE) ?: return
+        val self = this
+        with(sharedPref.edit()) {
+            putStringSet(getString(R.string.saved_favorites), self.favorites)
+            commit()
+        }
+        this.displayStarButton()
+    }
+
+    fun displayStarButton() {
+        val isFavorite = this.favorites.contains(this.id)
+        detail_activity_star_filled.visibility = when (isFavorite) {
+            true -> View.VISIBLE
+            false -> View.GONE
+        }
+
+        detail_activity_star_empty.visibility = when (isFavorite) {
+            false -> View.VISIBLE
+            true -> View.GONE
+        }
+    }
+
+    fun addFavorite(id: String) {
+        val set = this.favorites.toMutableSet()
+        set.add(id)
+        this.favorites = set
+        this.saveFavorites()
+    }
+
+    fun removeFavorite(id: String) {
+        val set = this.favorites.toMutableSet()
+        set.remove(id)
+        this.favorites = set
+        this.saveFavorites()
     }
 
     fun initChartWithTag(tag: String) {

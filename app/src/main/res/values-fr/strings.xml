@@ -118,4 +118,5 @@
     <string name="button_pm2_5">PM2.5</string>
     <string name="button_pm10">PM10</string>
     <string name="button_no2">NO2</string>
+    <string name="saved_favorites">saved_favorites</string>
 </resources>
