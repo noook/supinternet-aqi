@@ -154,14 +154,14 @@ class DetailActivity : AppCompatActivity() {
     }
 
     fun loadFavorites() {
-        val sharedPref = this.getPreferences(Context.MODE_PRIVATE) ?: return
+        val sharedPref = this.getSharedPreferences(getString(R.string.saved_favorites), MODE_PRIVATE) ?: return
         val favorites = sharedPref.getStringSet(getString(R.string.saved_favorites), setOf())
         this.favorites = favorites!!
         this.displayStarButton()
     }
 
     fun saveFavorites() {
-        val sharedPref = this.getPreferences(Context.MODE_PRIVATE) ?: return
+        val sharedPref = this.getSharedPreferences(getString(R.string.saved_favorites), MODE_PRIVATE) ?: return
         val self = this
         with(sharedPref.edit()) {
             putStringSet(getString(R.string.saved_favorites), self.favorites)

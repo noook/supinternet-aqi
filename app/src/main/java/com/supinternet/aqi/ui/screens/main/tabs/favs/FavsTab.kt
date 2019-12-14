@@ -4,16 +4,22 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.supinternet.aqi.R
 import com.supinternet.aqi.data.network.model.station.Data
 import kotlinx.android.synthetic.main.fragment_favs.*
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
-data class Fav(val stationName : String,  val stationId: Int)
+data class Fav(val stationName: String, val stationId: Int)
 
 class FavsTab : Fragment() {
+
+    var favorites = listOf<String>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -23,16 +29,28 @@ class FavsTab : Fragment() {
         return inflater.inflate(R.layout.fragment_favs, container, false)
     }
 
+    fun loadFavorites() {
+        val sharedPref = this.activity!!.getSharedPreferences(
+            getString(R.string.saved_favorites),
+            AppCompatActivity.MODE_PRIVATE
+        ) ?: return
+        val favorites = sharedPref.getStringSet(getString(R.string.saved_favorites), setOf())
+        this.favorites = favorites!!.toList()
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val arrrayResult = mutableListOf<Data>()
         super.onViewCreated(view, savedInstanceState)
 
-        var data = arrayOf(Fav("Paris",5722), Fav("Lyon",3028), Fav("Toulouse",3836))
+        loadFavorites()
+        var data = this.favorites.map {
+            Fav("", it.toInt())
+        }.toTypedArray()
 
         GlobalScope.launch(Dispatchers.Default) {
 
 
-            for(station in data) {
+            for (station in data) {
 
                 val res =
                     com.supinternet.aqi.data.network.AQIAPI.getInstance().currentStationData(
