@@ -1,0 +1,170 @@
+{
+	"info": {
+		"_postman_id": "50ad42ef-91f2-4092-86ac-2968232e8881",
+		"name": "Android",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "AQICN Map Bounds",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3333/aqicn/map/bounds?latlng=39.379436,116.091230,40.235643,116.7843",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3333",
+					"path": [
+						"aqicn",
+						"map",
+						"bounds"
+					],
+					"query": [
+						{
+							"key": "latlng",
+							"value": "39.379436,116.091230,40.235643,116.7843"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AQICN Station",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3333/aqicn/station?city=@5389",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3333",
+					"path": [
+						"aqicn",
+						"station"
+					],
+					"query": [
+						{
+							"key": "city",
+							"value": "@5389"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AQICN Station History",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3333/aqicn/station?city=@5389",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3333",
+					"path": [
+						"aqicn",
+						"station"
+					],
+					"query": [
+						{
+							"key": "city",
+							"value": "@5389"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AQICN GPS",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3333/aqicn/gps?lng=48.9167&lat=2.7167",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3333",
+					"path": [
+						"aqicn",
+						"gps"
+					],
+					"query": [
+						{
+							"key": "lng",
+							"value": "48.9167"
+						},
+						{
+							"key": "lat",
+							"value": "2.7167"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AQICN Search",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3333/aqicn/search?q=Paris",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3333",
+					"path": [
+						"aqicn",
+						"search"
+					],
+					"query": [
+						{
+							"key": "q",
+							"value": "Paris"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AQICN Search Country",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3333/aqicn/search?q=Paris",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3333",
+					"path": [
+						"aqicn",
+						"search"
+					],
+					"query": [
+						{
+							"key": "q",
+							"value": "Paris"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -19,3 +19,7 @@ docker-compose run api npm run knex migrate:latest
 docker-compose up
 # Requests and crons are logged
 ```
+
+## Requests
+
+Postman collection available in this folder to test the server.
