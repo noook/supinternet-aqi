@@ -1,0 +1,43 @@
+version: '2'
+services:
+    api:
+        image: node:alpine
+        working_dir: /app
+        command: npm start
+        restart: unless-stopped
+        container_name: api
+        tty: true
+        command: npm run dev
+        volumes:
+            - ./:/app
+        ports:
+            - 3333:3333
+            - 9229:9229
+        depends_on:
+            - db
+        links:
+            - db
+        environment:
+            CRON_INTERVAL: ${CRON_INTERVAL}
+            NODE_ENV: ${NODE_ENV}
+            PORT: ${PORT}
+            AQICN_TOKEN: ${AQICN_TOKEN}
+            DB_DRIVER: ${DB_DRIVER}
+            DB_HOST: ${DB_HOST}
+            DB_NAME: ${DB_NAME}
+            DB_PORT: ${DB_PORT}
+            DB_USER: ${DB_USER}
+            DB_PASSWORD: ${DB_PASSWORD}
+
+    db:
+        container_name: db
+        volumes:
+        - ./pgdata:/var/lib/postgresql/data
+        ports:
+        - 5432:5432
+        image: postgres:11.5
+        environment:
+            TZ: Europe/Paris
+            POSTGRES_USER: ${DB_USER}
+            POSTGRES_DB: ${DB_NAME}
+            POSTGRES_PASSWORD: ${DB_PASSWORD}
